@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>6 Months of Samii & Shashu 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --rose: #e8607a;
+    --rose-light: #f4a0b0;
+    --gold: #d4a96a;
+    --dark: #0d0810;
+    --dark2: #160f1e;
+    --dark3: #1f1530;
+    --card-bg: #1a1128;
+    --text: #f0e6f6;
+    --muted: #9e8aaa;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── Stars background ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 20% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 30%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 10% 50%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 35% 90%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 85%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 55% 45%, rgba(255,200,220,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 25% 75%, rgba(255,200,220,0.4) 0%, transparent 100%);
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ── SPLASH SCREEN ── */
+  #splash {
+    position: fixed; inset: 0; z-index: 100;
+    background: var(--dark);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  #splash.hide { opacity: 0; transform: scale(1.05); pointer-events: none; }
+
+  .splash-heart {
+    font-size: 60px;
+    animation: heartbeat 1.4s ease-in-out infinite;
+    margin-bottom: 1.5rem;
+  }
+  @keyframes heartbeat {
+    0%,100% { transform: scale(1); }
+    14% { transform: scale(1.2); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.15); }
+    56% { transform: scale(1); }
+  }
+
+  .splash-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 6vw, 52px);
+    color: var(--rose-light);
+    text-align: center;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .splash-sub {
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+
+  .open-btn {
+    background: linear-gradient(135deg, var(--rose), #c0405a);
+    color: white;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 30px rgba(232,96,122,0.35);
+  }
+  .open-btn:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(232,96,122,0.55); }
+
+  /* ── LOVE NOTE MODAL ── */
+  #love-note {
+    position: fixed; inset: 0; z-index: 90;
+    background: rgba(10,6,16,0.92);
+    display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+  #love-note.show { opacity: 1; pointer-events: all; }
+
+  .note-card {
+    background: var(--dark2);
+    border: 1px solid rgba(232,96,122,0.3);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 520px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    animation: floatUp 0.6s ease forwards;
+  }
+  @keyframes floatUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .note-emoji { font-size: 40px; margin-bottom: 1rem; display: block; }
+  .note-to {
+    font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 1rem;
+  }
+  .note-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(15px, 2.5vw, 18px);
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 2rem;
+  }
+  .note-text em { color: var(--rose-light); font-style: italic; }
+
+  .enter-btn {
+    background: transparent;
+    border: 1.5px solid var(--rose);
+    color: var(--rose-light);
+    padding: 12px 36px;
+    border-radius: 40px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+  .enter-btn:hover { background: var(--rose); color: white; }
+
+  /* ── MAIN APP ── */
+  #app { position: relative; z-index: 1; display: none; }
+  #app.visible { display: block; }
+
+  /* ── HEADER ── */
+  header {
+    padding: 2rem 4vw 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 3vw, 26px);
+    color: var(--rose-light);
+  }
+  .logo span { color: var(--muted); font-size: 0.7em; font-style: italic; }
+  .date-badge {
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); border: 1px solid rgba(212,169,106,0.4);
+    padding: 6px 16px; border-radius: 20px;
+  }
+
+  /* ── HERO BANNER ── */
+  .hero {
+    position: relative;
+    padding: 3rem 4vw 2rem;
+    overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute; top: -60px; left: -80px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(232,96,122,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-glow2 {
+    position: absolute; bottom: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(100,60,180,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-label {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--rose); margin-bottom: 0.75rem;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 7vw, 72px);
+    line-height: 1.1;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .hero-title em { color: var(--rose-light); font-style: italic; }
+  .hero-sub {
+    font-size: clamp(13px, 1.8vw, 16px);
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  /* ── CHAPTER ROWS ── */
+  .chapters { padding: 0 0 4rem; }
+
+  .chapter { margin-bottom: 3rem; }
+
+  .chapter-header {
+    padding: 0 4vw;
+    margin-bottom: 1.2rem;
+    display: flex; align-items: baseline; gap: 1rem;
+  }
+  .chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(18px, 2.5vw, 24px);
+    color: var(--text);
+  }
+  .chapter-count {
+    font-size: 12px; color: var(--muted);
+  }
+
+  /* ── PHOTO ROW ── */
+  .photo-row {
+    display: flex;
+    gap: 12px;
+    padding: 0 4vw;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+  }
+  .photo-row::-webkit-scrollbar { display: none; }
+
+  .photo-card {
+    flex: 0 0 auto;
+    width: clamp(160px, 22vw, 260px);
+    aspect-ratio: 3/4;
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    scroll-snap-align: start;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    background: var(--card-bg);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .photo-card:hover { transform: scale(1.04) translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+  .photo-card:hover .card-overlay { opacity: 1; }
+  .photo-card:hover .card-label { transform: translateY(0); opacity: 1; }
+
+  .photo-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .photo-card:hover img { transform: scale(1.06); }
+
+  /* placeholder when no image */
+  .photo-card .placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px;
+    background: linear-gradient(160deg, var(--card-bg), #2a1840);
+  }
+  .placeholder-icon { font-size: 36px; opacity: 0.5; }
+  .placeholder-text { font-size: 11px; color: var(--muted); text-align: center; padding: 0 12px; line-height: 1.5; }
+
+  .card-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,6,16,0.9) 0%, transparent 55%);
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+  .card-label {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 1rem 0.9rem 0.9rem;
+    transform: translateY(6px);
+    opacity: 0.8;
+    transition: all 0.3s ease;
+  }
+  .card-caption {
+    font-size: 13px; color: var(--text); line-height: 1.4;
+    font-family: 'Playfair Display', serif; font-style: italic;
+  }
+  .card-date { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  /* Add photo slot */
+  .add-card {
+    flex: 0 0 auto;
+    width: clamp(160px, 22vw, 260px);
+    aspect-ratio: 3/4;
+    border-radius: 14px;
+    border: 2px dashed rgba(232,96,122,0.25);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 8px; cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    scroll-snap-align: start;
+    background: rgba(232,96,122,0.03);
+  }
+  .add-card:hover { border-color: rgba(232,96,122,0.6); background: rgba(232,96,122,0.07); }
+  .add-icon { font-size: 28px; color: var(--rose); opacity: 0.6; }
+  .add-text { font-size: 12px; color: var(--muted); }
+
+  /* ── LIGHTBOX ── */
+  #lightbox {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(5,3,10,0.96);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+    padding: 1rem;
+  }
+  #lightbox.show { opacity: 1; pointer-events: all; }
+
+  .lb-inner {
+    position: relative;
+    max-width: 700px; width: 100%;
+    text-align: center;
+    animation: lbIn 0.3s ease forwards;
+  }
+  @keyframes lbIn { from { transform: scale(0.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+  #lb-img {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 16px;
+    display: block;
+    margin: 0 auto 1.25rem;
+  }
+  .lb-placeholder-big {
+    width: 100%; height: 55vh;
+    background: var(--card-bg);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 12px;
+    margin-bottom: 1.25rem;
+  }
+  .lb-placeholder-big span { font-size: 60px; opacity: 0.4; }
+  .lb-placeholder-big p { font-size: 14px; color: var(--muted); }
+
+  #lb-caption {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2.5vw, 20px);
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  #lb-chapter { font-size: 12px; color: var(--rose); letter-spacing: 2px; text-transform: uppercase; }
+
+  .lb-close {
+    position: fixed; top: 1.5rem; right: 1.5rem;
+    background: rgba(255,255,255,0.08);
+    border: none; color: white;
+    width: 40px; height: 40px; border-radius: 50%;
+    font-size: 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .lb-close:hover { background: rgba(255,255,255,0.18); }
+
+  .lb-nav {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.08);
+    border: none; color: white;
+    width: 44px; height: 44px; border-radius: 50%;
+    font-size: 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .lb-nav:hover { background: rgba(255,255,255,0.18); }
+  #lb-prev { left: 1rem; }
+  #lb-next { right: 1rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 3rem 2rem 4rem;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  .footer-heart { font-size: 28px; margin-bottom: 0.75rem; animation: heartbeat 2s ease-in-out infinite; display: block; }
+  .footer-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 15px; color: var(--muted); }
+  .footer-names { color: var(--rose-light); }
+
+  /* ── HOW TO ADD PHOTOS BANNER ── */
+  .add-photo-guide {
+    margin: 0 4vw 2.5rem;
+    background: rgba(232,96,122,0.06);
+    border: 1px dashed rgba(232,96,122,0.25);
+    border-radius: 14px;
+    padding: 1.2rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  }
+  .guide-icon { font-size: 24px; }
+  .guide-text { flex: 1; }
+  .guide-text strong { color: var(--rose-light); font-size: 14px; display: block; margin-bottom: 2px; }
+  .guide-text span { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* ── MUSIC PLAYER ── */
+  #music-player {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(22, 15, 30, 0.92);
+    border: 1px solid rgba(232,96,122,0.3);
+    border-radius: 50px;
+    padding: 10px 18px 10px 12px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  #music-player:hover { border-color: rgba(232,96,122,0.6); box-shadow: 0 8px 40px rgba(232,96,122,0.2); }
+
+  .music-icon-wrap {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--rose), #c0405a);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+  .music-info { display: flex; flex-direction: column; }
+  .music-title { font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; }
+  .music-artist { font-size: 10px; color: var(--muted); }
+
+  .music-bars {
+    display: flex; align-items: flex-end; gap: 2px;
+    height: 16px; margin-left: 4px;
+  }
+  .music-bars span {
+    display: block; width: 3px;
+    background: var(--rose);
+    border-radius: 2px;
+    animation: musicBar 0.8s ease-in-out infinite alternate;
+  }
+  .music-bars span:nth-child(1) { height: 6px;  animation-delay: 0s;    animation-duration: 0.7s; }
+  .music-bars span:nth-child(2) { height: 14px; animation-delay: 0.15s; animation-duration: 0.9s; }
+  .music-bars span:nth-child(3) { height: 10px; animation-delay: 0.3s;  animation-duration: 0.75s; }
+  .music-bars span:nth-child(4) { height: 16px; animation-delay: 0.1s;  animation-duration: 1s; }
+  .music-bars span:nth-child(5) { height: 8px;  animation-delay: 0.25s; animation-duration: 0.8s; }
+
+  .music-bars.paused span { animation-play-state: paused; }
+
+  @keyframes musicBar {
+    from { transform: scaleY(0.3); }
+    to   { transform: scaleY(1); }
+  }
+
+  .music-toggle {
+    background: none; border: none; cursor: pointer;
+    color: var(--rose-light); font-size: 18px;
+    display: flex; align-items: center; padding: 0;
+    margin-left: 2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-heart">💕</div>
+  <h1 class="splash-title">6 Months of<br><em style="color:var(--rose);">Samii & Shashu</em></h1>
+  <p class="splash-sub">A little something made with love</p>
+  <button class="open-btn" onclick="showNote()">Open Your Surprise 🎬</button>
+</div>
+
+<!-- LOVE NOTE -->
+<div id="love-note">
+  <div class="note-card">
+    <span class="note-emoji">🌸</span>
+    <p class="note-to">For my Samii</p>
+    <p class="note-text">
+      Hey Samii 🌸 So I made you a little something... because <em>6 months of you</em> deserves more than just a WhatsApp text. Scroll through, smile a little (or a lot), and know that every single moment with you has been my favourite. Love you to the moon and back — <em>your Shashu ❤️</em>
+    </p>
+    <button class="enter-btn" onclick="enterApp()">Let's go 🎬</button>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+
+  <header>
+    <div class="logo">Samii & Shashu <span>— our story</span></div>
+    <div class="date-badge">6 Month Anniversary 💍</div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+    <p class="hero-label">✦ Our Little World</p>
+    <h2 class="hero-title">Every moment<br>with <em>you</em> is my<br>favourite one.</h2>
+    <p class="hero-sub">Six months of laughter, love, and everything in between. This is us. 🎞</p>
+  </section>
+
+  <!-- HOW TO ADD PHOTOS -->
+  <div class="add-photo-guide">
+    <span class="guide-icon">📸</span>
+    <div class="guide-text">
+      <strong>How to add your photos</strong>
+      <span>Right-click any photo card below → "Edit photo" → paste your image URL. Or open this file in a text editor and replace the <code>src="YOUR_PHOTO_URL"</code> placeholders with your actual photo links from Google Drive, WhatsApp Web, or any image host.</span>
+    </div>
+  </div>
+
+  <div class="chapters" id="chapters"></div>
+
+  <footer>
+    <span class="footer-heart">❤️</span>
+    <p class="footer-text">Made with every bit of love, for <span class="footer-names">Samii</span> — from <span class="footer-names">Shashu</span></p>
+  </footer>
+</div>
+
+<!-- MUSIC PLAYER -->
+<div id="music-player" onclick="toggleMusic()" title="Play / Pause" style="display:none;">
+  <div class="music-icon-wrap">🎵</div>
+  <div class="music-info">
+    <span class="music-title">Love Me Like You Do</span>
+    <span class="music-artist">Ellie Goulding</span>
+  </div>
+  <div class="music-bars" id="music-bars">
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <button class="music-toggle" id="music-toggle-btn" aria-label="Toggle music">⏸</button>
+</div>
+
+<!-- Hidden YouTube iframe for audio -->
+<iframe id="yt-player"
+  src="https://www.youtube.com/embed/AJtDXIazrMo?autoplay=1&loop=1&playlist=AJtDXIazrMo&controls=0&fs=0&iv_load_policy=3&modestbranding=1&enablejsapi=1"
+  allow="autoplay"
+  style="position:fixed;width:1px;height:1px;opacity:0;pointer-events:none;bottom:0;left:0;"
+  frameborder="0">
+</iframe>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <button class="lb-close" onclick="closeLB()">✕</button>
+  <button class="lb-nav" id="lb-prev" onclick="navLB(-1)">‹</button>
+  <button class="lb-nav" id="lb-next" onclick="navLB(1)">›</button>
+  <div class="lb-inner">
+    <div id="lb-img-wrap"></div>
+    <p id="lb-caption"></p>
+    <p id="lb-chapter"></p>
+  </div>
+</div>
+
+<script>
+// ── DATA ── Edit captions, dates, and photo URLs here!
+const chapters = [
+  {
+    title: "How It All Began",
+    emoji: "🌅",
+    description: "The beginning of us",
+    photos: [
+      { src: "", caption: "The first time I saw you 🥺", date: "Day 1" },
+      { src: "", caption: "Where it all started", date: "The beginning" },
+      { src: "", caption: "That smile that got me 😍", date: "" },
+      { src: "", caption: "Our first little moment", date: "" },
+      { src: "", caption: "Already falling for you", date: "" },
+    ]
+  },
+  {
+    title: "The Dating Days",
+    emoji: "🥂",
+    description: "Late nights, long talks, butterflies",
+    photos: [
+      { src: "", caption: "Our first date ever 🥰", date: "" },
+      { src: "", caption: "Adventures together", date: "" },
+      { src: "", caption: "Just us, being silly", date: "" },
+      { src: "", caption: "Every moment felt magical", date: "" },
+      { src: "", caption: "Making memories", date: "" },
+      { src: "", caption: "The best days of my life", date: "" },
+    ]
+  },
+  {
+    title: "6 Months of Marriage",
+    emoji: "💍",
+    description: "Officially forever",
+    photos: [
+      { src: "", caption: "The happiest day of my life 👰🏻", date: "Our wedding day" },
+      { src: "", caption: "Mr. & Mrs. forever 💍", date: "" },
+      { src: "", caption: "Our first photo as a married couple", date: "" },
+      { src: "", caption: "Building our little world", date: "" },
+      { src: "", caption: "Home is wherever you are 🏠", date: "" },
+      { src: "", caption: "6 months down, forever to go ✨", date: "" },
+    ]
+  },
+  {
+    title: "Silly & Sweet",
+    emoji: "😂",
+    description: "Because we're always a little unhinged",
+    photos: [
+      { src: "", caption: "You and your faces 😂", date: "" },
+      { src: "", caption: "My favourite weirdo", date: "" },
+      { src: "", caption: "Zero chill, all love", date: "" },
+      { src: "", caption: "This is us, unfiltered 🥹", date: "" },
+    ]
+  }
+];
+
+// ── FLATTEN for lightbox navigation ──
+let allPhotos = [];
+chapters.forEach(ch => ch.photos.forEach(p => allPhotos.push({ ...p, chapter: ch.emoji + " " + ch.title })));
+let currentLB = 0;
+
+// ── RENDER ──
+function render() {
+  const container = document.getElementById('chapters');
+  chapters.forEach((ch, ci) => {
+    const sec = document.createElement('div');
+    sec.className = 'chapter';
+    sec.innerHTML = `
+      <div class="chapter-header">
+        <h3 class="chapter-title">${ch.emoji} ${ch.title}</h3>
+        <span class="chapter-count">${ch.photos.length} memories</span>
+      </div>
+    `;
+    const row = document.createElement('div');
+    row.className = 'photo-row';
+
+    ch.photos.forEach((photo, pi) => {
+      const globalIdx = allPhotos.findIndex(p => p.caption === photo.caption && p.chapter.includes(ch.title));
+      const card = document.createElement('div');
+      card.className = 'photo-card';
+      card.onclick = () => openLB(globalIdx >= 0 ? globalIdx : 0);
+
+      if (photo.src) {
+        card.innerHTML = `
+          <img src="${photo.src}" alt="${photo.caption}" loading="lazy"/>
+          <div class="card-overlay"></div>
+          <div class="card-label">
+            <p class="card-caption">${photo.caption}</p>
+            ${photo.date ? `<p class="card-date">${photo.date}</p>` : ''}
+          </div>
+        `;
+      } else {
+        card.innerHTML = `
+          <div class="placeholder">
+            <span class="placeholder-icon">${ch.emoji}</span>
+            <p class="placeholder-text">${photo.caption}</p>
+            ${photo.date ? `<p class="card-date" style="font-size:11px;color:var(--muted);margin-top:4px;">${photo.date}</p>` : ''}
+          </div>
+          <div class="card-overlay"></div>
+        `;
+      }
+      row.appendChild(card);
+    });
+
+    sec.appendChild(row);
+    container.appendChild(sec);
+  });
+}
+
+// ── LIGHTBOX ──
+function openLB(idx) {
+  currentLB = idx;
+  updateLB();
+  document.getElementById('lightbox').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeLB() {
+  document.getElementById('lightbox').classList.remove('show');
+  document.body.style.overflow = '';
+}
+function navLB(dir) {
+  currentLB = (currentLB + dir + allPhotos.length) % allPhotos.length;
+  updateLB();
+}
+function updateLB() {
+  const p = allPhotos[currentLB];
+  const wrap = document.getElementById('lb-img-wrap');
+  if (p.src) {
+    wrap.innerHTML = `<img id="lb-img" src="${p.src}" alt="${p.caption}"/>`;
+  } else {
+    wrap.innerHTML = `
+      <div class="lb-placeholder-big">
+        <span>📷</span>
+        <p>Add your photo here</p>
+      </div>`;
+  }
+  document.getElementById('lb-caption').textContent = p.caption;
+  document.getElementById('lb-chapter').textContent = p.chapter;
+}
+
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLB();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLB();
+  if (e.key === 'ArrowLeft') navLB(-1);
+  if (e.key === 'ArrowRight') navLB(1);
+});
+
+// ── MUSIC ──
+let musicPlaying = true;
+
+function toggleMusic() {
+  const iframe = document.getElementById('yt-player');
+  const bars = document.getElementById('music-bars');
+  const btn = document.getElementById('music-toggle-btn');
+  if (musicPlaying) {
+    iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    bars.classList.add('paused');
+    btn.textContent = '▶';
+    musicPlaying = false;
+  } else {
+    iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
+    bars.classList.remove('paused');
+    btn.textContent = '⏸';
+    musicPlaying = true;
+  }
+}
+
+// ── FLOW ──
+function showNote() {
+  document.getElementById('splash').classList.add('hide');
+  setTimeout(() => {
+    document.getElementById('splash').style.display = 'none';
+    document.getElementById('love-note').classList.add('show');
+  }, 800);
+}
+function enterApp() {
+  document.getElementById('love-note').classList.remove('show');
+  setTimeout(() => {
+    document.getElementById('app').classList.add('visible');
+    document.getElementById('music-player').style.display = 'flex';
+    render();
+  }, 400);
+}
+
+</script>
+</body>
+</html>
